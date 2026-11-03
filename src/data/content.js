@@ -129,4 +129,5 @@ export const meta = {
   banking: { title: 'Banking Internacional e BaaS: Conta e Escrow | L2M', description: 'Plataforma BaaS integrada ao Banco BS2, com conta digital, movimentação internacional, gestão financeira e conta escrow para operações internacionais.' },
   consultoria: { title: 'Consultoria em Câmbio e Capitais Estrangeiros | L2M', description: 'Consultoria em câmbio, registros no Banco Central (SCE-IED e SCE-Crédito), empréstimos externos, BaaS e regularização de operações internacionais.' },
   jeito: { title: 'Sobre a L2M | Consultoria em Câmbio e Estruturação Internacional', description: 'Conheça a L2M: mais de 10 anos de experiência em câmbio consultivo, banking e estruturação financeira internacional, com transparência e compliance regulatório.' },
+  privacy: { title: 'Política de Privacidade | L2M Financial Solutions', description: 'Política de privacidade da L2M Financial Solutions e informações sobre o tratamento de dados enviados pelo formulário de contato.' },
 };

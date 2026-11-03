@@ -26,7 +26,7 @@ function App() {
   const key = routeKey(path);
   useEffect(() => { document.documentElement.dataset.theme = theme; localStorage.setItem('l2m-theme', theme); }, [theme]);
   useEffect(() => { const onPop = () => setPath(window.location.pathname); window.addEventListener('popstate', onPop); return () => window.removeEventListener('popstate', onPop); }, []);
-  useEffect(() => { setDocumentMeta(meta[key]); window.scrollTo({ top: 0, behavior: 'instant' }); }, [key, path]);
+  useEffect(() => { setDocumentMeta(meta[key] || meta.home); window.scrollTo({ top: 0, behavior: 'instant' }); }, [key, path]);
   useEffect(() => { const onClick = (event) => { const link = event.target.closest('a'); if (!link || link.target === '_blank' || link.origin !== window.location.origin || !link.pathname.startsWith('/')) return; event.preventDefault(); window.history.pushState({}, '', link.pathname + link.hash); setPath(link.pathname); requestAnimationFrame(() => document.querySelector(link.hash || '#top')?.scrollIntoView({ behavior: 'smooth' })); }; document.addEventListener('click', onClick); return () => document.removeEventListener('click', onClick); }, []);
   const Page = key === 'cambio' ? Cambio : key === 'banking' ? Banking : key === 'consultoria' ? Consultoria : key === 'jeito' ? Jeito : key === 'privacy' ? Privacy : Home;
   return <PageFrame theme={theme} setTheme={setTheme}><Suspense fallback={<div className="page-loading"><span className="loading-mark">L2M</span><span>Carregando conteúdo</span></div>}><Page /></Suspense></PageFrame>;

@@ -1,3 +1,3 @@
 export default {
-  logoUrl: "https://l2m.com.br/assets/logos/logo-dark.png"
+  logoUrl: "https://raw.githubusercontent.com/SlimelabApezato/l2msite/main/public/assets/logos/logo-dark.png"
 };
