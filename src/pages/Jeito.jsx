@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { ArrowUpRight, Check, ShieldCheck } from 'lucide-react';
-import { ButtonLink, SectionHeading, StatStrip, TrustNote } from '../components/SiteChrome';
+import { ButtonLink, SectionHeading, StatStrip, TrustNote, whatsappUrl } from '../components/SiteChrome';
 import { site, stats } from '../data/content';
 
 function ContactForm() {
@@ -20,14 +20,10 @@ function ContactForm() {
     if (Object.keys(nextInvalid).length) { setInvalid(nextInvalid); setStatus('error'); setMessage('Confira os campos destacados antes de enviar.'); requestAnimationFrame(() => firstInvalid.current?.focus()); return; }
     setInvalid({});
     if (data.website) { setStatus('sent'); return; }
-    setStatus('sending');
-    try {
-      const response = await fetch('/.netlify/functions/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      const body = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(body.error || 'Não foi possível enviar agora.');
-      setStatus('sent');
-      event.currentTarget.reset();
-    } catch (error) { setStatus('error'); setMessage(error.message || 'Não foi possível enviar agora. Fale com a L2M pelo WhatsApp.'); }
+    const whatsappMessage = `*Novo contato pelo site L2M*\n\n*Nome:* ${String(data.name).trim()}\n*E-mail:* ${String(data.email).trim()}\n*Empresa:* ${String(data.company).trim() || 'Não informado'}\n*Mensagem:*\n${String(data.message).trim()}`;
+    setStatus('sent');
+    window.open(whatsappUrl(whatsappMessage), '_blank', 'noopener,noreferrer');
+    event.currentTarget.reset();
   };
   const field = (name) => ({ ref: name === Object.keys(invalid)[0] ? firstInvalid : undefined, 'aria-invalid': Boolean(invalid[name]), 'aria-describedby': invalid[name] ? `${name}-error` : undefined });
   return <form className="contact-form" onSubmit={submit} noValidate aria-describedby="form-help">

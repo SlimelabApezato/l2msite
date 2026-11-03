@@ -8,6 +8,7 @@ export function whatsappUrl(message = 'Olá, gostaria de falar com a L2M.') {
 
 export function Header({ theme, setTheme }) {
   const [open, setOpen] = useState(false);
+  const [retracted, setRetracted] = useState(false);
   const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 760px)').matches);
   const menuButtonRef = useRef(null);
   const firstLinkRef = useRef(null);
@@ -15,7 +16,8 @@ export function Header({ theme, setTheme }) {
   useEffect(() => { document.body.classList.toggle('menu-open', open); if (open) firstLinkRef.current?.focus(); else menuButtonRef.current?.focus(); return () => document.body.classList.remove('menu-open'); }, [open]);
   useEffect(() => { const query = window.matchMedia('(max-width: 760px)'); const update = () => setIsMobile(query.matches); update(); query.addEventListener?.('change', update); return () => query.removeEventListener?.('change', update); }, []);
   useEffect(() => { const onKeyDown = event => { if (event.key === 'Escape' && open) setOpen(false); }; window.addEventListener('keydown', onKeyDown); return () => window.removeEventListener('keydown', onKeyDown); }, [open]);
-  return <header className="site-header">
+  useEffect(() => { const onScroll = () => setRetracted(window.scrollY > 88); window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); return () => window.removeEventListener('scroll', onScroll); }, []);
+  return <header className={`site-header ${retracted ? 'is-retracted' : ''}`} onMouseEnter={() => setRetracted(false)} onMouseLeave={() => { if (window.scrollY > 88) setRetracted(true); }}>
     <div className="header-inner container">
       <a className="brand" href="/home" onClick={() => setOpen(false)} aria-label="L2M Financial Solutions - Home"><img src={theme === 'dark' ? '/assets/logos/logo-light.png' : '/assets/logos/logo-dark.png'} alt="L2M Financial Solutions" /></a>
       <button ref={menuButtonRef} className="mobile-menu-toggle" aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
