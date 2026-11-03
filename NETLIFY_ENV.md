@@ -4,7 +4,7 @@ Configure estas variáveis em **Netlify → Site configuration → Environment v
 
 ```env
 NODE_VERSION=20
-SUPABASE_URL=https://mwgzkfmmixagpjfkdnyj.supabase.co
+SUPABASE_URL=<URL do projeto Supabase, configurada somente no painel privado da Netlify>
 SUPABASE_SERVICE_ROLE_KEY=<cole aqui uma nova service role key rotacionada, somente no painel privado da Netlify>
 ```
 
