@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Check, ChevronDown, Menu, Moon, ShieldCheck, Sun, X } from 'lucide-react';
 import { navItems, site } from '../data/content';
 
@@ -8,14 +8,19 @@ export function whatsappUrl(message = 'Olá, gostaria de falar com a L2M.') {
 
 export function Header({ theme, setTheme }) {
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 760px)').matches);
+  const menuButtonRef = useRef(null);
+  const firstLinkRef = useRef(null);
   const currentPath = window.location.pathname;
-  useEffect(() => { document.body.classList.toggle('menu-open', open); return () => document.body.classList.remove('menu-open'); }, [open]);
+  useEffect(() => { document.body.classList.toggle('menu-open', open); if (open) firstLinkRef.current?.focus(); else menuButtonRef.current?.focus(); return () => document.body.classList.remove('menu-open'); }, [open]);
+  useEffect(() => { const query = window.matchMedia('(max-width: 760px)'); const update = () => setIsMobile(query.matches); update(); query.addEventListener?.('change', update); return () => query.removeEventListener?.('change', update); }, []);
+  useEffect(() => { const onKeyDown = event => { if (event.key === 'Escape' && open) setOpen(false); }; window.addEventListener('keydown', onKeyDown); return () => window.removeEventListener('keydown', onKeyDown); }, [open]);
   return <header className="site-header">
     <div className="header-inner container">
       <a className="brand" href="/home" onClick={() => setOpen(false)} aria-label="L2M Financial Solutions - Home"><img src={theme === 'dark' ? '/assets/logos/logo-light.png' : '/assets/logos/logo-dark.png'} alt="L2M Financial Solutions" /></a>
-      <button className="mobile-menu-toggle" aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
-      <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="Navegação principal">
-        {navItems.map(item => <a key={item.path} className={currentPath === item.path || (currentPath === '/' && item.path === '/home') ? 'active' : ''} href={item.path} onClick={() => setOpen(false)}>{item.label}</a>)}
+      <button ref={menuButtonRef} className="mobile-menu-toggle" aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="primary-navigation" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
+      <nav id="primary-navigation" className={`main-nav ${open ? 'is-open' : ''}`} aria-label="Navegação principal" aria-hidden={isMobile && !open} inert={isMobile && !open ? '' : undefined}>
+        {navItems.map((item, index) => <a ref={index === 0 ? firstLinkRef : undefined} key={item.path} className={currentPath === item.path || (currentPath === '/' && item.path === '/home') ? 'active' : ''} href={item.path} onClick={() => setOpen(false)}>{item.label}</a>)}
         <a className="header-cta" href={whatsappUrl()} target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>Fale com a gente <ArrowUpRight size={16} /></a>
         <button className="theme-toggle" aria-label={`Ativar tema ${theme === 'dark' ? 'claro' : 'escuro'}`} onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>{theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}<span>{theme === 'dark' ? 'Claro' : 'Escuro'}</span></button>
       </nav>
@@ -33,7 +38,7 @@ export function Footer() { return <footer className="site-footer"><div className
   <div><p className="footer-label">Contato</p><a href={`mailto:${site.email}`}>{site.email}</a><a href={`tel:${site.phone.replace(/\D/g, '')}`}>{site.phone}</a><a href={whatsappUrl()} target="_blank" rel="noreferrer">WhatsApp {site.whatsappDisplay}</a><a href="/jeito-l2m#fale-com-a-gente">Enviar mensagem</a><p className="footer-address">{site.address}</p></div>
 </div><div className="container footer-bottom"><span>{site.legalName} · CNPJ {site.cnpj}</span><div><a href={site.ethics} target="_blank" rel="noreferrer">Código de Ética</a><a href="/politica-de-privacidade">Política de Privacidade</a><span>© {new Date().getFullYear()} L2M</span></div></div></footer>; }
 
-export function PageFrame({ children, theme, setTheme }) { return <><Header theme={theme} setTheme={setTheme} /><main>{children}</main><WhatsAppFab /><Footer /></>; }
+export function PageFrame({ children, theme, setTheme }) { return <><a className="skip-link" href="#main-content">Pular para o conteúdo</a><Header theme={theme} setTheme={setTheme} /><main id="main-content" tabIndex="-1">{children}</main><WhatsAppFab /><Footer /></>; }
 
 export function SectionHeading({ eyebrow, title, text, align = 'left' }) { return <div className={`section-heading ${align}`}><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{text && <p className="lead">{text}</p>}</div>; }
 
@@ -45,4 +50,4 @@ export function StatStrip({ items }) { return <div className="stat-strip">{items
 
 export function TrustNote({ children = 'Compliance e clareza em cada etapa.' }) { return <div className="trust-note"><ShieldCheck size={18} /><span>{children}</span></div>; }
 
-export function setDocumentMeta({ title, description }) { document.title = title; let desc = document.querySelector('meta[name="description"]'); if (!desc) { desc = document.createElement('meta'); desc.name = 'description'; document.head.appendChild(desc); } desc.content = description; }
+export function setDocumentMeta({ title, description }) { document.title = title; let desc = document.querySelector('meta[name="description"]'); if (!desc) { desc = document.createElement('meta'); desc.name = 'description'; document.head.appendChild(desc); } desc.content = description; for (const [name, content] of [['og:title', title], ['og:description', description]]) { let tag = document.querySelector(`meta[property="${name}"]`); if (!tag) { tag = document.createElement('meta'); tag.setAttribute('property', name); document.head.appendChild(tag); } tag.content = content; } let canonical = document.querySelector('link[rel="canonical"]'); if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); } canonical.href = `https://l2m.com.br${window.location.pathname}`; }
