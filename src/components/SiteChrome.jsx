@@ -48,7 +48,14 @@ export function ButtonLink({ href, children, variant = 'primary', external = fal
 
 export function FAQ({ items }) { const [open, setOpen] = useState(null); return <div className="faq-list">{items.map(([question, answer], i) => <div className={`faq-item ${open === i ? 'open' : ''}`} key={question}><button onClick={() => setOpen(open === i ? null : i)} aria-expanded={open === i}><span>{question}</span>{open === i ? <X size={18} /> : <ChevronDown size={18} />}</button>{open === i && <div className="faq-answer"><p>{answer}</p></div>}</div>)}</div>; }
 
-export function StatStrip({ items }) { return <div className="stat-strip">{items.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>; }
+export function StatStrip({ items }) {
+  const ref = useRef(null);
+  const [started, setStarted] = useState(false);
+  const [values, setValues] = useState(() => items.map(() => 0));
+  useEffect(() => { const node = ref.current; if (!node) return undefined; const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setStarted(true); observer.disconnect(); } }, { threshold: .35 }); observer.observe(node); return () => observer.disconnect(); }, []);
+  useEffect(() => { if (!started) return undefined; const targets = items.map(([value]) => Number(String(value).replace(/\./g, ''))); const duration = 2200; const startedAt = performance.now(); let frame; const tick = now => { const progress = Math.min((now - startedAt) / duration, 1); const eased = 1 - Math.pow(1 - progress, 3); setValues(targets.map(target => Math.round(target * eased))); if (progress < 1) frame = requestAnimationFrame(tick); }; frame = requestAnimationFrame(tick); return () => cancelAnimationFrame(frame); }, [started, items]);
+  return <div className="stat-strip" ref={ref}>{items.map(([value, label], index) => <div key={label}><strong>{values[index].toLocaleString('pt-BR')}</strong><span>{label}</span></div>)}</div>;
+}
 
 export function TrustNote({ children = 'Compliance e clareza em cada etapa.' }) { return <div className="trust-note"><ShieldCheck size={18} /><span>{children}</span></div>; }
 
