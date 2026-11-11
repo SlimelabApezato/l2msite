@@ -9,21 +9,28 @@ export const site = {
   cnpj: '18.045.454/0001-44',
   instagram: 'https://www.instagram.com/L2MTeam',
   linkedin: 'https://www.linkedin.com/company/l2m-financial-solution/',
+  facebook: 'https://www.facebook.com/L2MTeam',
   bs2: 'https://www.bancobs2.com.br/',
-  ethics: 'https://l2m.com.br/staging/codigo-de-etica',
+  ethics: '/codigo-de-etica',
 };
 
 export const navItems = [
   { label: 'Home', path: '/home' },
+  { label: 'Jeito L2M', path: '/jeito-l2m' },
   { label: 'Câmbio', path: '/cambio' },
   { label: 'Banking', path: '/banking' },
   { label: 'Consultoria', path: '/consultoria' },
-  { label: 'Jeito L2M', path: '/jeito-l2m' },
 ];
 
 export const stats = [
   ['10', 'anos de história'],
   ['1.400', 'clientes satisfeitos'],
+  ['21.000', 'contratos fechados'],
+];
+
+export const institutionalStats = [
+  ['10', 'anos de história'],
+  ['10.421', 'clientes satisfeitos'],
   ['21.000', 'contratos fechados'],
 ];
 
@@ -52,8 +59,8 @@ export const changeServices = [
 export const bankingProducts = [
   { id: 'produtos-banking', title: 'Produtos de Banking', text: 'Através de tecnologia própria e de uma plataforma digital robusta, facilitamos o acesso a serviços financeiros essenciais, para que você administre suas finanças internacionais com total controle e confiança.' },
   { id: 'baas', title: 'Bank as a Service (BaaS) L2M', text: 'O BaaS da L2M é uma plataforma própria, em aplicativo e web, que reúne conta digital, movimentação internacional e gestão financeira no mesmo lugar. A plataforma é integrada ao Banco BS2, e a conta e a movimentação internacional são operadas no Brasil. Atende a empresa que precisa centralizar a gestão financeira e ter mais visibilidade da operação internacional.', highlight: 'Controle, visibilidade e autonomia para a empresa conduzir a própria operação.' },
-  { id: 'produtos-customizados', title: 'Produtos Customizados', text: 'Estruturas financeiras desenhadas para necessidades específicas de empresas estrangeiras, não residentes e operações internacionais complexas.' },
-  { id: 'contas', title: 'Contas para empresas e não residentes', text: 'A L2M abre contas para empresas e para não residentes pela plataforma BaaS, integrada ao Banco BS2. É uma estrutura de conta e de movimentação internacional operada no Brasil, com a segurança de uma estrutura bancária formal.' },
+  { id: 'produtos-customizados', title: 'Contas para empresas estrangeiras e não residentes', text: 'A L2M estrutura contas para empresas estrangeiras, destinadas a pessoas jurídicas, e contas correntes para não residentes, destinadas a pessoas físicas não residentes. As modalidades são distintas e operadas no Brasil pela plataforma BaaS integrada ao Banco BS2.' },
+  { id: 'contas', title: 'Contas para empresas estrangeiras e não residentes', text: 'A L2M estrutura contas para empresas estrangeiras, destinadas a pessoas jurídicas, e contas correntes para não residentes, destinadas a pessoas físicas não residentes. Cada modalidade atende a um perfil diferente dentro de uma estrutura bancária formal.' },
   { id: 'escrow', title: 'Escrow Account', text: 'A conta escrow, ou conta garantia, mantém o valor de uma transação protegido até que as condições do contrato sejam cumpridas. É usada em transações complexas, como aquisições e contratos internacionais. Com a escrow, o pagamento acontece quando o combinado é cumprido.' },
 ];
 
@@ -130,4 +137,5 @@ export const meta = {
   consultoria: { title: 'Consultoria em Câmbio e Capitais Estrangeiros | L2M', description: 'Consultoria em câmbio, registros no Banco Central (SCE-IED e SCE-Crédito), empréstimos externos, BaaS e regularização de operações internacionais.' },
   jeito: { title: 'Sobre a L2M | Consultoria em Câmbio e Estruturação Internacional', description: 'Conheça a L2M: mais de 10 anos de experiência em câmbio consultivo, banking e estruturação financeira internacional, com transparência e compliance regulatório.' },
   privacy: { title: 'Política de Privacidade | L2M Financial Solutions', description: 'Política de privacidade da L2M Financial Solutions e informações sobre o tratamento de dados enviados pelo formulário de contato.' },
+  ethics: { title: 'Código de Ética | L2M Financial Solutions', description: 'Princípios de integridade, conformidade, confidencialidade, transparência e respeito que orientam a atuação da L2M.' },
 };

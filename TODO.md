@@ -1,12 +1,17 @@
 # TODO — L2M Financial Solutions
 
-- [x] Entregar cinco páginas separadas: `/home`, `/cambio`, `/banking`, `/consultoria` e `/jeito-l2m`, usando os textos finais fornecidos.
+- [x] Implementar as páginas separadas: `/home`, `/cambio`, `/banking`, `/consultoria`, `/jeito-l2m`, `/codigo-de-etica` e `/politica-de-privacidade`, usando os textos finais fornecidos.
 - [x] Usar as fotos reais do escritório, logotipos oficiais e fontes Prime fornecidas no arquivo L2M.
-- [x] Implementar menu com Home, Câmbio, Banking, Consultoria e Jeito L2M.
-- [x] Implementar botão “Fale com a gente” abrindo o WhatsApp e botão flutuante em todas as páginas com pulso sutil.
+- [x] Implementar menu na ordem Home, Jeito L2M e produtos Câmbio, Banking e Consultoria.
+- [x] Implementar botão “Fale com a gente” abrindo o WhatsApp, com a mensagem “Olá, vim do site e gostaria de mais informações.”, e botão flutuante em todas as páginas sem pulso animado.
 - [x] Implementar cabeçalho frost glass blur médio; no mobile, aplicar blur ao menu aberto e manter textos legíveis.
 - [x] Implementar tema claro/escuro adaptando títulos, textos, botões, ícones, SVGs, menu e estruturas.
 - [x] Implementar rodapé em todas as páginas com mapa do site, contato, razão social, CNPJ, código de ética, política de privacidade e redes sociais.
+- [x] Implementar no rodapé os três canais sociais com ícones próprios: LinkedIn, Instagram e Facebook.
+- [x] Inserir a imagem original do fluxo do Hub na primeira dobra da Home, atualizar “L2M em números” e os parceiros BTG, Banco BS2, Double Bank e Euribank.
+- [x] Corrigir o segundo box de Banking para “Contas para empresas estrangeiras e não residentes”, mantendo a distinção entre pessoas jurídicas estrangeiras e pessoas físicas não residentes.
+- [x] Ajustar a apresentação numérica do Jeito L2M com o valor 10.421 e incluir os cinco valores institucionais, incluindo Inovação.
+- [x] Atualizar o Código de Ética para o novo padrão visual sem remover o conteúdo normativo original.
 - [x] Implementar formulário no fim de `/jeito-l2m` com validação, sanitização, honeypot, limite de tamanho e feedback de envio.
 - [x] Implementar `sitemap.xml`, `robots.txt`, `llms.txt`, metas SEO únicas, carregamento lazy e divisão de código.
 - [x] Manter secrets fora do Git, usar somente variáveis de ambiente e deixar integração Supabase preparada.
